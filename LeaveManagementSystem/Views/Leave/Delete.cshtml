@@ -1,0 +1,49 @@
+﻿@model LeaveManagementSystem.Models.LeaveRequest
+
+@{
+    ViewData["Title"] = "Cancel Leave Request";
+}
+
+<h1>Cancel Leave Request</h1>
+
+<div class="alert alert-danger">
+    <h3>Are you sure you want to cancel this leave request?</h3>
+</div>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Leave Type</dt>
+        <dd class="col-sm-10">@Model.LeaveType</dd>
+
+        <dt class="col-sm-2">Start Date</dt>
+        <dd class="col-sm-10">@Model.StartDate.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-2">End Date</dt>
+        <dd class="col-sm-10">@Model.EndDate.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-2">Reason</dt>
+        <dd class="col-sm-10">@Model.Reason</dd>
+
+        <dt class="col-sm-2">Status</dt>
+        <dd class="col-sm-10">
+            @if (Model.Status == "Approved")
+            {
+                <span class="badge bg-success">Approved</span>
+            }
+            else if (Model.Status == "Rejected")
+            {
+                <span class="badge bg-danger">Rejected</span>
+            }
+            else
+            {
+                <span class="badge bg-warning">Pending</span>
+            }
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="LeaveId" />
+        <input type="submit" value="Cancel Leave" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>

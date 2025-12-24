@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Leave Management System";
+}
+
+<div class="text-center">
+    <h1>Welcome to Leave Management System</h1>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="login-info mt-4">
+            <h4>Login Credentials</h4>
+            <p><strong>Admin:</strong> admin@technova.com / Admin@123</p>
+            <p><strong>Employee:</strong> employee@test.com / Employee@123</p>
+
+            <div class="mt-3">
+                <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Login</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="mt-4">
+            <h3>Welcome, @User.Identity?.Name!</h3>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <p>You are logged in as an Administrator.</p>
+                <div class="mt-3">
+                    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary">Go to Dashboard</a>
+                </div>
+            }
+            else if (User.IsInRole("Employee"))
+            {
+                <p>You are logged in as an Employee.</p>
+                <div class="mt-3">
+                    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary">Go to Dashboard</a>
+                </div>
+            }
+        </div>
+    }
+</div>

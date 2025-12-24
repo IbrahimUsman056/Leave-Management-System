@@ -1,0 +1,74 @@
+﻿@model LeaveManagementSystem.Models.LeaveRequest
+
+@{
+    ViewData["Title"] = "Apply for Leave";
+}
+
+<h1>Apply for Leave</h1>
+
+<form asp-action="Create">
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label asp-for="LeaveType" class="control-label"></label>
+                <select asp-for="LeaveType" class="form-control">
+                    <option value="">Select Leave Type</option>
+                    <option value="Casual">Casual Leave</option>
+                    <option value="Sick">Sick Leave</option>
+                    <option value="Annual">Annual Leave</option>
+                    <option value="Emergency">Emergency Leave</option>
+                </select>
+                <span asp-validation-for="LeaveType" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" type="date" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group mb-3">
+                <label asp-for="Reason" class="control-label"></label>
+                <textarea asp-for="Reason" class="form-control" rows="5"
+                          placeholder="Please provide a reason for your leave..."></textarea>
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit Leave Request</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('StartDate').min = today;
+        document.getElementById('EndDate').min = today;
+
+        // Auto-set end date if empty
+        document.getElementById('StartDate').addEventListener('change', function() {
+            const endDate = document.getElementById('EndDate');
+            if (!endDate.value) {
+                endDate.value = this.value;
+            }
+        });
+    </script>
+}
