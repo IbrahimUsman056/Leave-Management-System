@@ -4,7 +4,9 @@
     ViewData["Title"] = ViewBag.Title ?? "Leave Requests";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="bg-info text-white p-3 rounded mb-3">
+    <h2 class="mb-0">📋 @ViewData["Title"]</h2>
+</div>
 
 @if (TempData["SuccessMessage"] != null)
 {
@@ -24,88 +26,96 @@
 
 @if (User.IsInRole("Employee"))
 {
-    <p>
-        <a asp-action="Create" class="btn btn-success">Apply for New Leave</a>
-    </p>
+    <div class="mb-3 text-end">
+        <a asp-action="Create" class="btn btn-success">➕ Apply for New Leave</a>
+    </div>
 }
 
 @if (Model == null || Model.Count == 0)
 {
-    <div class="alert alert-info">
+    <div class="alert alert-info text-center">
         No leave requests found.
         @if (User.IsInRole("Employee"))
         {
-            <a asp-action="Create" class="alert-link">Click here to apply for leave</a>
+            <br />
+            <a asp-action="Create" class="btn btn-primary mt-2">Apply for Leave</a>
         }
     </div>
 }
 else
 {
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Leave Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Reason</th>
-                <th>Status</th>
-                <th>Submitted On</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var leave in Model)
-            {
-                <tr>
-                    <td>@leave.LeaveType</td>
-                    <td>@leave.StartDate.ToString("dd/MM/yyyy")</td>
-                    <td>@leave.EndDate.ToString("dd/MM/yyyy")</td>
-                    <td>@leave.Reason</td>
-                    <td>
-                        @if (leave.Status == "Approved")
-                        {
-                            <span class="badge bg-success">Approved</span>
-                        }
-                        else if (leave.Status == "Rejected")
-                        {
-                            <span class="badge bg-danger">Rejected</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-warning">Pending</span>
-                        }
-                    </td>
-                    <td>@leave.CreatedDate.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            if (leave.Status == "Pending")
-                            {
-                                <form method="post" asp-action="Approve" asp-route-id="@leave.LeaveId" class="d-inline">
-                                    <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                </form>
-                                <form method="post" asp-action="Reject" asp-route-id="@leave.LeaveId" class="d-inline">
-                                    <button type="submit" class="btn btn-danger btn-sm">Reject</button>
-                                </form>
-                            }
-                            <a asp-action="Edit" asp-route-id="@leave.LeaveId" class="btn btn-warning btn-sm">Edit</a>
-                        }
-                        else
-                        {
-                            @if (leave.Status == "Pending")
-                            {
-                                <a asp-action="Edit" asp-route-id="@leave.LeaveId" class="btn btn-warning btn-sm">Edit</a>
-                                <form asp-action="Delete" asp-route-id="@leave.LeaveId" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Cancel this leave request?')">
-                                        Cancel
-                                    </button>
-                                </form>
-                            }
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Leave Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Submitted On</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var leave in Model)
+                    {
+                        <tr>
+                            <td>@leave.LeaveType</td>
+                            <td>@leave.StartDate.ToString("dd/MM/yyyy")</td>
+                            <td>@leave.EndDate.ToString("dd/MM/yyyy")</td>
+                            <td>@leave.Reason</td>
+                            <td>
+                                @if (leave.Status == "Approved")
+                                {
+                                    <span class="badge bg-success">Approved</span>
+                                }
+                                else if (leave.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger">Rejected</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                            </td>
+                            <td>@leave.CreatedDate.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    if (leave.Status == "Pending")
+                                    {
+                                        <form method="post" asp-action="Approve" asp-route-id="@leave.LeaveId" class="d-inline">
+                                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                        </form>
+                                        <form method="post" asp-action="Reject" asp-route-id="@leave.LeaveId" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                                        </form>
+                                    }
+                                    <a asp-action="Edit" asp-route-id="@leave.LeaveId" class="btn btn-warning btn-sm">Edit</a>
+                                }
+                                else
+                                {
+                                    if (leave.Status == "Pending")
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@leave.LeaveId" class="btn btn-warning btn-sm">Edit</a>
+                                        <form asp-action="Delete" asp-route-id="@leave.LeaveId" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Cancel this leave request?')">
+                                                Cancel
+                                            </button>
+                                        </form>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 }

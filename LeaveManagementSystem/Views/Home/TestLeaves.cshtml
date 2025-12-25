@@ -2,71 +2,110 @@
     ViewData["Title"] = "Test Leaves";
 }
 
-<h1>Debug Information</h1>
+<div class="bg-secondary text-white p-3 rounded mb-4">
+    <h2 class="mb-0">🛠 Debug Information</h2>
+</div>
 
-<h2>Current User</h2>
-<p>User ID: @ViewBag.CurrentUserId</p>
-<p>Employee: @ViewBag.CurrentEmployee?.Name (ID: @ViewBag.CurrentEmployee?.EmployeeId)</p>
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <h4>Current User</h4>
+        <p>User ID: <strong>@ViewBag.CurrentUserId</strong></p>
+        <p>Employee: <strong>@ViewBag.CurrentEmployee?.Name</strong> (ID: @ViewBag.CurrentEmployee?.EmployeeId)</p>
+    </div>
+</div>
 
-<h2>Database Counts</h2>
-<p>Total Employees: @ViewBag.Employees.Count</p>
-<p>Total Leaves: @ViewBag.Leaves.Count</p>
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <h4>Database Counts</h4>
+        <p>Total Employees: <strong>@ViewBag.Employees.Count</strong></p>
+        <p>Total Leaves: <strong>@ViewBag.Leaves.Count</strong></p>
+    </div>
+</div>
 
-<h2>All Employees</h2>
-@if (ViewBag.Employees.Count > 0)
-{
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Identity User ID</th>
-        </tr>
-        @foreach (var emp in ViewBag.Employees)
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <h4>All Employees</h4>
+        @if (ViewBag.Employees.Count > 0)
         {
-            <tr>
-                <td>@emp.EmployeeId</td>
-                <td>@emp.Name</td>
-                <td>@emp.Email</td>
-                <td>@emp.IdentityUserId</td>
-            </tr>
+            <table class="table table-striped table-bordered align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Identity User ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var emp in ViewBag.Employees)
+                    {
+                        <tr>
+                            <td>@emp.EmployeeId</td>
+                            <td>@emp.Name</td>
+                            <td>@emp.Email</td>
+                            <td>@emp.IdentityUserId</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
-    </table>
-}
-else
-{
-    <p class="text-danger">NO EMPLOYEES IN DATABASE!</p>
-}
-
-<h2>All Leave Requests</h2>
-@if (ViewBag.Leaves.Count > 0)
-{
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Employee ID</th>
-            <th>Type</th>
-            <th>Start Date</th>
-            <th>Status</th>
-        </tr>
-        @foreach (var leave in ViewBag.Leaves)
+        else
         {
-            <tr>
-                <td>@leave.LeaveId</td>
-                <td>@leave.EmployeeId</td>
-                <td>@leave.LeaveType</td>
-                <td>@leave.StartDate.ToString("dd/MM/yyyy")</td>
-                <td>@leave.Status</td>
-            </tr>
+            <p class="text-danger text-center">NO EMPLOYEES IN DATABASE!</p>
         }
-    </table>
-}
-else
-{
-    <p class="text-danger">NO LEAVE REQUESTS IN DATABASE!</p>
-}
+    </div>
+</div>
 
-<hr />
-<h2>Quick Test</h2>
-<a asp-controller="Leave" asp-action="Create" class="btn btn-primary">Test: Apply for Leave</a>
-<a asp-controller="Leave" asp-action="Index" class="btn btn-secondary">Test: View Leaves</a>
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <h4>All Leave Requests</h4>
+        @if (ViewBag.Leaves.Count > 0)
+        {
+            <table class="table table-striped table-bordered align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Employee ID</th>
+                        <th>Type</th>
+                        <th>Start Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var leave in ViewBag.Leaves)
+                    {
+                        <tr>
+                            <td>@leave.LeaveId</td>
+                            <td>@leave.EmployeeId</td>
+                            <td>@leave.LeaveType</td>
+                            <td>@leave.StartDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @if (leave.Status == "Approved")
+                                {
+                                    <span class="badge bg-success">Approved</span>
+                                }
+                                else if (leave.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger">Rejected</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="text-danger text-center">NO LEAVE REQUESTS IN DATABASE!</p>
+        }
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-controller="Leave" asp-action="Create" class="btn btn-success me-2">📝 Test: Apply for Leave</a>
+    <a asp-controller="Leave" asp-action="Index" class="btn btn-primary">📋 Test: View Leaves</a>
+</div>

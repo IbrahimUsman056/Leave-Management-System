@@ -2,40 +2,64 @@
     ViewData["Title"] = "Leave Management System";
 }
 
-<div class="text-center">
-    <h1>Welcome to Leave Management System</h1>
+<div class="text-center mt-4">
+
+    <div class="bg-info text-white p-4 rounded mb-4">
+        <h1 class="mb-0">🏖 Welcome to Leave Management System</h1>
+    </div>
 
     @if (!User.Identity.IsAuthenticated)
     {
-        <div class="login-info mt-4">
-            <h4>Login Credentials</h4>
-            <p><strong>Admin:</strong> admin@technova.com / Admin@123</p>
-            <p><strong>Employee:</strong> employee@test.com / Employee@123</p>
+        <div class="card shadow-sm mx-auto" style="max-width: 500px;">
+            <div class="card-body">
 
-            <div class="mt-3">
-                <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-primary">Login</a>
+                <h4 class="text-primary mb-3">🔐 Login Credentials</h4>
+
+                <p>
+                    <strong>Admin</strong><br />
+                    📧 ibi@gmail.com<br />
+                    🔑 Ibrahim@111
+                </p>
+
+                <p>
+                    <strong>Employee</strong><br />
+                    📧 babar@gmail.com<br />
+                    🔑 Babar@056
+                </p>
+
+                <a asp-area="Identity"
+                   asp-page="/Account/Login"
+                   class="btn btn-success mt-3">
+                    Login
+                </a>
+
             </div>
         </div>
     }
     else
     {
-        <div class="mt-4">
-            <h3>Welcome, @User.Identity?.Name!</h3>
+        <div class="card shadow-sm mx-auto" style="max-width: 500px;">
+            <div class="card-body">
 
-            @if (User.IsInRole("Admin"))
-            {
-                <p>You are logged in as an Administrator.</p>
-                <div class="mt-3">
-                    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary">Go to Dashboard</a>
-                </div>
-            }
-            else if (User.IsInRole("Employee"))
-            {
-                <p>You are logged in as an Employee.</p>
-                <div class="mt-3">
-                    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-primary">Go to Dashboard</a>
-                </div>
-            }
+                <h3 class="text-success">👋 Welcome, @User.Identity?.Name!</h3>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <p class="mt-2">You are logged in as <strong>Administrator</strong>.</p>
+                }
+                else if (User.IsInRole("Employee"))
+                {
+                    <p class="mt-2">You are logged in as <strong>Employee</strong>.</p>
+                }
+
+                <a asp-controller="Dashboard"
+                   asp-action="Index"
+                   class="btn btn-primary mt-3">
+                    Go to Dashboard
+                </a>
+
+            </div>
         </div>
     }
+
 </div>

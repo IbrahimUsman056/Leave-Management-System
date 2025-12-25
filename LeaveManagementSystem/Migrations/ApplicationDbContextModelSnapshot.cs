@@ -47,6 +47,7 @@ namespace LeaveManagementSystem.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("IdentityUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -90,7 +91,8 @@ namespace LeaveManagementSystem.Migrations
 
                     b.Property<string>("Reason")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -311,9 +313,9 @@ namespace LeaveManagementSystem.Migrations
             modelBuilder.Entity("LeaveManagementSystem.Models.LeaveRequest", b =>
                 {
                     b.HasOne("LeaveManagementSystem.Models.Employee", "Employee")
-                        .WithMany("LeaveRequests")
+                        .WithMany()
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -368,11 +370,6 @@ namespace LeaveManagementSystem.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("LeaveManagementSystem.Models.Employee", b =>
-                {
-                    b.Navigation("LeaveRequests");
                 });
 #pragma warning restore 612, 618
         }

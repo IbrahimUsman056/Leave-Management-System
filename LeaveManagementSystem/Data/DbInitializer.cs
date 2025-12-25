@@ -24,7 +24,7 @@ namespace LeaveManagementSystem.Data
             }
 
             // Create default admin user
-            var adminEmail = "admin@technova.com";
+            var adminEmail = "ibi@gmail.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
             if (adminUser == null)
@@ -36,7 +36,7 @@ namespace LeaveManagementSystem.Data
                     EmailConfirmed = true
                 };
 
-                var result = await userManager.CreateAsync(adminUser, "Admin@123");
+                var result = await userManager.CreateAsync(adminUser, "Ibrahim@111");
 
                 if (result.Succeeded)
                 {

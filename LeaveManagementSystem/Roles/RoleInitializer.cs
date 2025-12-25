@@ -30,8 +30,7 @@ namespace LeaveManagementSystem.Roles
                     }
                 }
 
-                // Create default admin user
-                var adminEmail = "admin@technova.com";
+                var adminEmail = "ibi@gmail.com";
                 var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
                 if (adminUser == null)
@@ -43,7 +42,7 @@ namespace LeaveManagementSystem.Roles
                         EmailConfirmed = true
                     };
 
-                    string adminPassword = "Admin@123";
+                    string adminPassword = "Ibrahim@111";
                     var createResult = await userManager.CreateAsync(adminUser, adminPassword);
 
                     if (createResult.Succeeded)

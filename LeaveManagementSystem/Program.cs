@@ -70,7 +70,7 @@ using (var scope = app.Services.CreateScope())
     }
 
     
-    var adminEmail = "admin@technova.com";
+    var adminEmail = "ibi@gmail.com";
     if (await userManager.FindByEmailAsync(adminEmail) == null)
     {
         var adminUser = new IdentityUser
@@ -80,16 +80,16 @@ using (var scope = app.Services.CreateScope())
             EmailConfirmed = true
         };
 
-        var result = await userManager.CreateAsync(adminUser, "Admin@123");
+        var result = await userManager.CreateAsync(adminUser, "Ibrahim@111");
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(adminUser, "Admin");
-            Console.WriteLine("Admin user created: admin@technova.com / Admin@123");
+            Console.WriteLine("Admin user created: ibi@gmail.com / Ibrahim@111");
         }
     }
 
    
-    var empEmail = "employee@test.com";
+    var empEmail = "babar@gmail.com";
     if (await userManager.FindByEmailAsync(empEmail) == null)
     {
         var empUser = new IdentityUser
@@ -99,18 +99,18 @@ using (var scope = app.Services.CreateScope())
             EmailConfirmed = true
         };
 
-        var result = await userManager.CreateAsync(empUser, "Employee@123");
+        var result = await userManager.CreateAsync(empUser, "Babar@056");
         if (result.Succeeded)
         {
             await userManager.AddToRoleAsync(empUser, "Employee");
 
             var employee = new Employee
             {
-                Name = "Test Employee",
+                Name = "Babar",
                 Email = empEmail,
                 CNIC = "12345-1234567-1",
-                Department = "IT",
-                Designation = "Developer",
+                Department = "AI",
+                Designation = "Analyst",
                 IsActive = true,
                 IdentityUserId = empUser.Id
             };
@@ -118,7 +118,7 @@ using (var scope = app.Services.CreateScope())
             context.Employees.Add(employee);
             await context.SaveChangesAsync();
 
-            Console.WriteLine("Test employee created: employee@test.com / Employee@123");
+            Console.WriteLine("Test employee created: babar@gmail.com / Babar@056");
         }
     }
 }

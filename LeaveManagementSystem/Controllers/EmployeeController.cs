@@ -59,7 +59,7 @@ namespace LeaveManagementSystem.Controllers
                     };
 
                   
-                    var result = await _userManager.CreateAsync(user, "Default@123");
+                    var result = await _userManager.CreateAsync(user, "Ibrahim@111");
 
                     if (result.Succeeded)
                     {
@@ -75,7 +75,7 @@ namespace LeaveManagementSystem.Controllers
 
                         TempData["SuccessMessage"] = $"Employee '{employee.Name}' created successfully!<br>" +
                                                    $"Login Email: {employee.Email}<br>" +
-                                                   $"Password: Default@123";
+                                                   $"Password: Babar@056";
 
                         return RedirectToAction(nameof(Index));
                     }
